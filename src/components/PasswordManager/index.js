@@ -3,22 +3,29 @@ import {v4 as uuidv4} from 'uuid'
 import PasswordItems from '../PasswordItems'
 import './index.css'
 
-const passwordList = []
-
-// {
-//     id: uuidv4(),
-//     website: 'amazon.in',
-//     username: 'amazon19',
-//     password: 'amazon@1996',
-//     isPasswordDisplay: false,
-//   },
+const passwordList = [
+  {
+    id: uuidv4(),
+    website: 'amazon.in',
+    username: 'amazon19',
+    password: 'amazon@1996',
+    isPasswordDisplay: false,
+  },
+  {
+    id: uuidv4(),
+    website: 'amazon.in',
+    username: 'amazon19',
+    password: 'amazon@1996',
+    isPasswordDisplay: false,
+  },
+]
 
 class PasswordManager extends Component {
   render() {
     const isAnyItemStoredInList = passwordList.length
     const displayListOrNoPassImg =
       isAnyItemStoredInList > 0 ? (
-        <ul>
+        <ul className="password-un-order-lists">
           {passwordList.map(eachPassword => (
             <PasswordItems
               key={eachPassword.id}
