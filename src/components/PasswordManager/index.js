@@ -1,8 +1,42 @@
 import {Component} from 'react'
+import {v4 as uuidv4} from 'uuid'
+import PasswordItems from '../PasswordItems'
 import './index.css'
+
+const passwordList = []
+
+// {
+//     id: uuidv4(),
+//     website: 'amazon.in',
+//     username: 'amazon19',
+//     password: 'amazon@1996',
+//     isPasswordDisplay: false,
+//   },
 
 class PasswordManager extends Component {
   render() {
+    const isAnyItemStoredInList = passwordList.length
+    const displayListOrNoPassImg =
+      isAnyItemStoredInList > 0 ? (
+        <ul>
+          {passwordList.map(eachPassword => (
+            <PasswordItems
+              key={eachPassword.id}
+              passwordItemsDetails={eachPassword}
+            />
+          ))}
+        </ul>
+      ) : (
+        <div>
+          <img
+            className="no-password-img"
+            src="https://assets.ccbp.in/frontend/react-js/no-passwords-img.png"
+            alt="no passwords"
+          />
+          <p className="no-password-text">No Passwords</p>
+        </div>
+      )
+
     return (
       <div className="main-password-manager-body">
         <img
@@ -89,9 +123,32 @@ class PasswordManager extends Component {
           <div className="your-password-heading-container-with-search-box">
             <div className="your-password-and-counts">
               <p className="form-main-heading">Your Passwords</p>
-              <p>0</p>
+              <p className="list-count-style">0</p>
             </div>
+            <label className="input-element-label-design" htmlFor="searchInput">
+              <div className="input-icons-container">
+                <img
+                  className="input-icon"
+                  src="https://assets.ccbp.in/frontend/react-js/password-manager-search-img.png"
+                  alt="search"
+                />
+              </div>
+              <input
+                className="input-element-style"
+                id="searchInput"
+                type="password"
+                placeholder="Enter Password"
+              />
+            </label>
           </div>
+          <hr className="line-style" />
+          <div className="show-password-container">
+            <label htmlFor="checkBoxInput">
+              <input className="input-checkbox-style" type="checkbox" />
+              Show Password
+            </label>
+          </div>
+          {displayListOrNoPassImg}
         </section>
       </div>
     )
