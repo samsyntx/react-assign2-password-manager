@@ -3,25 +3,74 @@ import {v4 as uuidv4} from 'uuid'
 import PasswordItems from '../PasswordItems'
 import './index.css'
 
-const passwordList = [
-  {
-    id: uuidv4(),
-    website: 'amazon.in',
-    username: 'amazon19',
-    password: 'amazon@1996',
-    isPasswordDisplay: false,
-  },
-  {
-    id: uuidv4(),
-    website: 'amazon.in',
-    username: 'amazon19',
-    password: 'amazon@1996',
-    isPasswordDisplay: false,
-  },
+const profilePicBackgroundColors = [
+  'bg-blue',
+  'bg-red',
+  'bg-orange',
+  'bg-purple',
+  'bg-sky',
 ]
 
 class PasswordManager extends Component {
+  state = {passwordList: []}
+
+  clickToAddNewPassword = event => {
+    event.preventDefault()
+    const websiteInputEl = document.getElementById('websiteInput').value
+    const usernameInputEl = document.getElementById('usernameInput').value
+    const passwordInputEl = document.getElementById('passwordInput').value
+    if (
+      websiteInputEl !== '' &&
+      usernameInputEl !== '' &&
+      passwordInputEl !== ''
+    ) {
+      const randomIndex = Math.floor(
+        Math.random() * profilePicBackgroundColors.length,
+      )
+      const profilePicColor = profilePicBackgroundColors[randomIndex]
+      const newPasswordObject = {
+        id: uuidv4(),
+        website: websiteInputEl,
+        username: usernameInputEl,
+        password: passwordInputEl,
+        isShowPassword: false,
+        profilePicColor,
+      }
+      const {passwordList} = this.state
+      const combineBothObjects = [...passwordList, newPasswordObject]
+      this.setState({passwordList: combineBothObjects})
+    }
+  }
+
+  searchInputChange = event => {
+    const {passwordList} = this.state
+    const filterPasswordList = passwordList.filter(eachItem =>
+      eachItem.website.toLowerCase().includes(event.target.value.toLowerCase()),
+    )
+    this.setState({passwordList: filterPasswordList})
+  }
+
+  deletedParticularFromManager = uniqueId => {
+    const {passwordList} = this.state
+    const filterPasswordList = passwordList.filter(
+      eachItem => eachItem.id !== uniqueId,
+    )
+
+    this.setState({passwordList: filterPasswordList})
+  }
+
+  changeShowPasswordStatus = () => {
+    const {passwordList} = this.state
+    const changedPasswordListStatus = passwordList.map(eachItem => ({
+      ...eachItem,
+      isShowPassword: !eachItem.isShowPassword,
+    }))
+    this.setState({passwordList: changedPasswordListStatus})
+  }
+
   render() {
+    const {passwordList} = this.state
+
     const isAnyItemStoredInList = passwordList.length
     const displayListOrNoPassImg =
       isAnyItemStoredInList > 0 ? (
@@ -30,11 +79,12 @@ class PasswordManager extends Component {
             <PasswordItems
               key={eachPassword.id}
               passwordItemsDetails={eachPassword}
+              deletedParticularFromManager={this.deletedParticularFromManager}
             />
           ))}
         </ul>
       ) : (
-        <div>
+        <div className="no-password-container">
           <img
             className="no-password-img"
             src="https://assets.ccbp.in/frontend/react-js/no-passwords-img.png"
@@ -117,6 +167,13 @@ class PasswordManager extends Component {
                 placeholder="Enter Password"
               />
             </label>
+            <button
+              onClick={this.clickToAddNewPassword}
+              className="submit-button-style"
+              type="submit"
+            >
+              Add
+            </button>
           </form>
           <div className="container-for-password-manager-img-large">
             <img
@@ -130,7 +187,7 @@ class PasswordManager extends Component {
           <div className="your-password-heading-container-with-search-box">
             <div className="your-password-and-counts">
               <p className="form-main-heading">Your Passwords</p>
-              <p className="list-count-style">0</p>
+              <p className="list-count-style">{isAnyItemStoredInList}</p>
             </div>
             <label className="input-element-label-design" htmlFor="searchInput">
               <div className="input-icons-container">
@@ -141,17 +198,22 @@ class PasswordManager extends Component {
                 />
               </div>
               <input
+                onChange={this.searchInputChange}
                 className="input-element-style"
                 id="searchInput"
-                type="password"
-                placeholder="Enter Password"
+                type="search"
+                placeholder="Search"
               />
             </label>
           </div>
           <hr className="line-style" />
           <div className="show-password-container">
             <label htmlFor="checkBoxInput">
-              <input className="input-checkbox-style" type="checkbox" />
+              <input
+                onChange={this.changeShowPasswordStatus}
+                className="input-checkbox-style"
+                type="checkbox"
+              />
               Show Password
             </label>
           </div>

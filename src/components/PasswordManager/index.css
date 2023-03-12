@@ -67,6 +67,16 @@ button {
   color: black;
   font-size: 15px;
 }
+.submit-button-style {
+  background-color: #0b69ff;
+  color: white;
+  padding: 10px 20px 10px 20px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 18px;
+  width: 100%;
+}
 /* _____________BOTTOM SECTION -------------- */
 
 .password-component-bottom-section {
@@ -88,17 +98,17 @@ button {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-right: 15px;
   flex-wrap: wrap;
 }
 .list-count-style {
   font-weight: 600;
   background-color: #454f84;
   border: 1px solid white;
-  width: 80px;
+  padding: 15px;
   font-size: 25px;
   text-align: center;
   border-radius: 15px;
+  margin: 5px;
 }
 .line-style {
   margin: 15px 0px 15px 0px;
@@ -124,5 +134,43 @@ button {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 25px;
+  margin-top: 15px;
+}
+/* ----------------Media queries ------------ */
+@media all and (min-width: 700px) {
+  .add-new-password-complete-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .container-for-password-manager-img-large {
+    display: inline;
+    max-width: 40%;
+  }
+  .container-for-password-manager-img-small {
+    display: none;
+  }
+  .form-container {
+    margin-right: 50px;
+  }
+  .no-password-img {
+    width: 40%;
+  }
+  .no-password-container {
+    width: 100%;
+    text-align: center;
+  }
+
+  .list-count-style {
+    margin-left: 15px;
+  }
+  .your-password-and-counts {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 }
