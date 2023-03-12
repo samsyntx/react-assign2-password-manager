@@ -1,0 +1,75 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Roboto';
+  color: white;
+}
+button {
+  cursor: pointer;
+}
+.main-password-manager-body {
+  background-color: #9ba9eb;
+  padding: 25px;
+  min-height: 100vh;
+}
+.logo {
+  width: 150px;
+}
+.add-new-password-complete-container {
+  background-color: #5763a5;
+  margin: 20px 0px 20px 0px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-radius: 15px;
+}
+.password-manager-img {
+  width: 100%;
+  padding: 15px;
+}
+.container-for-password-manager-img-large {
+  display: none;
+}
+.form-container {
+  width: 100%;
+  flex-grow: 1;
+  background-color: #454f84;
+  padding: 25px 15px 25px 15px;
+  border-radius: 15px;
+}
+.form-main-heading {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.input-element-label-design {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.input-icon {
+  width: 25px;
+}
+.input-icons-container {
+  border-right: 1px solid grey;
+  padding: 10px;
+}
+.input-element-style {
+  width: 100%;
+  flex-grow: 1;
+  outline: none;
+  border: none;
+  padding: 10px;
+  color: black;
+  font-size: 15px;
+}
+.password-component-bottom-section {
+  background-color: #5763a5;
+  border-radius: 15px;
+  margin: 20px 0px 20px 0px;
+  padding: 20px;
+}
