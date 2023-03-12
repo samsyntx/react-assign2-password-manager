@@ -12,7 +12,7 @@ const profilePicBackgroundColors = [
 ]
 
 class PasswordManager extends Component {
-  state = {passwordList: []}
+  state = {passwordList: [], searchInputProvided: ''}
 
   clickToAddNewPassword = event => {
     event.preventDefault()
@@ -39,15 +39,15 @@ class PasswordManager extends Component {
       const {passwordList} = this.state
       const combineBothObjects = [...passwordList, newPasswordObject]
       this.setState({passwordList: combineBothObjects})
+      document.getElementById('websiteInput').value = ''
+      document.getElementById('usernameInput').value = ''
+      document.getElementById('passwordInput').value = ''
     }
   }
 
   searchInputChange = event => {
-    const {passwordList} = this.state
-    const filterPasswordList = passwordList.filter(eachItem =>
-      eachItem.website.toLowerCase().includes(event.target.value.toLowerCase()),
-    )
-    this.setState({passwordList: filterPasswordList})
+    const eventValue = event.target.value
+    this.setState({searchInputProvided: eventValue})
   }
 
   deletedParticularFromManager = uniqueId => {
@@ -69,13 +69,19 @@ class PasswordManager extends Component {
   }
 
   render() {
-    const {passwordList} = this.state
+    const {passwordList, searchInputProvided} = this.state
 
-    const isAnyItemStoredInList = passwordList.length
+    const filteredPasswordListWithSearch = passwordList.filter(eachItem =>
+      eachItem.website
+        .toLowerCase()
+        .includes(searchInputProvided.toLowerCase()),
+    )
+
+    const isAnyItemStoredInList = filteredPasswordListWithSearch.length
     const displayListOrNoPassImg =
       isAnyItemStoredInList > 0 ? (
         <ul className="password-un-order-lists">
-          {passwordList.map(eachPassword => (
+          {filteredPasswordListWithSearch.map(eachPassword => (
             <PasswordItems
               key={eachPassword.id}
               passwordItemsDetails={eachPassword}
@@ -110,7 +116,7 @@ class PasswordManager extends Component {
             />
           </div>
           <form className="form-container">
-            <p className="form-main-heading">Add New Password</p>
+            <h1 className="form-main-heading">Add New Password</h1>
             <label
               className="input-element-label-design"
               htmlFor="websiteInput"
@@ -186,7 +192,7 @@ class PasswordManager extends Component {
         <section className="password-component-bottom-section">
           <div className="your-password-heading-container-with-search-box">
             <div className="your-password-and-counts">
-              <p className="form-main-heading">Your Passwords</p>
+              <h1 className="form-main-heading">Your Passwords</h1>
               <p className="list-count-style">{isAnyItemStoredInList}</p>
             </div>
             <label className="input-element-label-design" htmlFor="searchInput">
@@ -208,14 +214,13 @@ class PasswordManager extends Component {
           </div>
           <hr className="line-style" />
           <div className="show-password-container">
-            <label htmlFor="checkBoxInput">
-              <input
-                onChange={this.changeShowPasswordStatus}
-                className="input-checkbox-style"
-                type="checkbox"
-              />
-              Show Password
-            </label>
+            <input
+              onChange={this.changeShowPasswordStatus}
+              className="input-checkbox-style"
+              type="checkbox"
+              id="checkBoxInput"
+            />
+            <label htmlFor="checkBoxInput">Show passwords</label>
           </div>
           {displayListOrNoPassImg}
         </section>

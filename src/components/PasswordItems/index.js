@@ -26,7 +26,7 @@ const PasswordItems = props => {
   }
 
   return (
-    <div className="password-item-container">
+    <li className="password-item-container">
       <div className="container-contains-dp-and-details">
         <div className={`common-dp-container ${profilePicColor}`}>
           <p>{website[0]}</p>
@@ -49,7 +49,7 @@ const PasswordItems = props => {
           alt="delete"
         />
       </button>
-    </div>
+    </li>
   )
 }
 
